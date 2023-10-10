@@ -1,54 +1,24 @@
-name: Build and deploy to GH Pages
+name: Deploy-uxpin
 
-on:
-  # Runs on pushes targeting the default branch
-  push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
-  workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# Allow one concurrent deployment
-concurrency:
-  group: "pages"
-  cancel-in-progress: true
+on: push
 
 jobs:
-  build:
+  deploy-uxpin:
+    name: UXpin update
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    if: "github.ref == 'refs/heads/master' && !contains(github.event.head_commit.message, 'skip ci')"
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Build
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@master
         with:
-          node-version: 18
-          cache: "npm"
-      - name: Run install
-        uses: borales/actions-yarn@v4
+          ref: refs/heads/master
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v1
         with:
-          cmd: install
-      - name: Build production bundle
-        uses: borales/actions-yarn@v4
-        with:
-          cmd: build
-
-      - name: Setup pages
-        uses: actions/configure-pages@v2
-      - name: Upload build artifacts
-        uses: actions/upload-pages-artifact@v1
-        with:
-          # Upload build directory
-          path: "build"
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v2
+          node-version: "12.x"
+      - name: Install
+        run: yarn
+      - name: Push To UXpin
+        run: yarn push
+        env:
+          UXPIN_AUTH_TOKEN: 60fbad710b392f71cd9e68fbeb8f7fc932211d56
