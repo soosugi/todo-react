@@ -21,7 +21,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "debug": "uxpin-merge -disable-tunneling",
-    "push": "uxpin-merge push –token 60fbad710b392f71cd9e68fbeb8f7fc932211d56"
+    "push": "uxpin-merge push"
   },
   "eslintConfig": {
     "extends": "react-app"
