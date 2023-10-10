@@ -19,7 +19,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "debug": "uxpin-merge -disable-tunneling",
+    "push": "uxpin-merge push –token 60fbad710b392f71cd9e68fbeb8f7fc932211d56"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -35,5 +37,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@uxpin/merge-cli": "^3.4.2"
   }
 }
